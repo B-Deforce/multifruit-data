@@ -1,0 +1,31 @@
+parameters:
+  name: bdb
+  db_path: C:\Users\u0143591\OneDrive - KU Leuven\research_data\BDB\processed\pear_database.db
+  query_path: queries/bdb_data.sql
+  data:
+    fill_missing:
+      pruning_treatment: NRP
+      irrigation_treatment: FI
+      irrigation_amount: 0.0
+    group_id_cols:
+      - orchard_id
+      - plot_id
+      - depth_cm
+      - measurement_year
+    pivot: true
+    train_cutoff: "2009"
+    date_col: measurement_date
+    target_col: swp_mpa
+    standardize_cols:
+      - avg_moist_30
+      - avg_moist_60
+      - avg_moist_90
+      - avg_soil_temp_30
+      - ETo
+      - swp_mpa
+      - precip_daily
+      - irrigation_amount
+    dummies:
+      - composite_group_id
+      - pruning_treatment
+      - irrigation_treatment

@@ -1,0 +1,64 @@
+parameters:
+  name: ivia
+  db_path: C:/Users/u0143591/OneDrive - KU Leuven/Data/IVIA/processed/orange_db.db
+  data:
+    sample_rate: 4h
+    window_size: 120h
+    use_meteo: "hh" # {daily: for daily meteo, hh: for halfhourly meteo, which can be aggregated to sample_rate}
+    vwc_chul:
+      query_path: queries/ivia/get_vwc_chul.sql
+    vwc_lir:
+      query_path:
+        - C:/Users/u0143591/OneDrive - KU Leuven/research_data/IVIA/processed/LLIRIAT1_processed.csv
+        - C:/Users/u0143591/OneDrive - KU Leuven/research_data/IVIA/processed/LLIRIAT3_processed.csv
+    vwc_aggregation_scheme:
+        mean:
+          - vmc_10
+          - vmc_30
+          - vmc_50
+          - vmc_70
+          - avg_temp
+          - avg_humidity
+          - wind_speed
+          - wind_dir
+          - radiation
+          - dew_point_kpa
+        last:
+          - tree_id
+          - treatment
+          - field_id
+          - date
+          - plot_id
+        sum:
+          - precipitation # in original compag paper this was also averaged
+    tree:
+      query_path: queries/ivia/get_tree.sql
+    irrigation:
+      query_path: C:/Users/u0143591/OneDrive - KU Leuven/research_data/IVIA/processed/irr_processed.csv
+    daily_meteo:
+      query_path: queries/ivia/get_daily_meteo.sql
+    hh_meteo:
+      query_path: queries/ivia/get_hh_meteo.sql
+    swp:
+      query_path: queries/ivia/get_swp.sql
+    group_id_cols:
+      - tree_id
+      - year
+    train_cutoff: "2010-07"
+    date_col: datetime
+    target_col: avg_swp
+    standardize_cols:
+      - vmc_10
+      - vmc_30
+      - vmc_50
+      - vmc_70
+      - avg_temp
+      - avg_swp
+      - dew_point_kpa
+      - wind_speed
+      - radiation
+      - precipitation
+      - irr_mm
+    dummies:
+      - composite_group_id
+      - treatment

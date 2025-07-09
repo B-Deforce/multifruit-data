@@ -1,0 +1,41 @@
+parameters:
+  name: ivia_daily
+  db_path: C:/Users/u0143591/OneDrive - KU Leuven/Data/IVIA/processed/orange_db.db
+  data:
+    use_meteo: "daily" # {daily: for daily meteo, hh: for halfhourly meteo, which can be aggregated to sample_rate}
+    window_size: 120h
+    vwc_chul:
+      query_path: queries/ivia/get_vwc_chul.sql
+    vwc_lir:
+      query_path:
+        - C:/Users/u0143591/OneDrive - KU Leuven/research_data/IVIA/processed/LLIRIAT1_processed.csv
+        - C:/Users/u0143591/OneDrive - KU Leuven/research_data/IVIA/processed/LLIRIAT3_processed.csv
+    tree:
+      query_path: queries/ivia/get_tree.sql
+    irrigation:
+      query_path: C:/Users/u0143591/OneDrive - KU Leuven/research_data/IVIA/processed/irr_processed.csv
+    daily_meteo:
+      query_path: queries/ivia/get_daily_meteo.sql
+    hh_meteo:
+      query_path: queries/ivia/get_hh_meteo.sql
+    swp:
+      query_path: queries/ivia/get_swp.sql
+    group_id_cols:
+      - tree_id
+      - year
+    train_cutoff: "2010-07"
+    date_col: date
+    target_col: avg_swp
+    standardize_cols:
+      - vmc_10
+      - vmc_30
+      - vmc_50
+      - vmc_70
+      - temp # daily
+      - avg_swp
+      - precip_mm # daily
+      - eto_mm # daily
+      - irr_mm
+    dummies:
+      - composite_group_id
+      - treatment
